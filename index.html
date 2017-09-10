@@ -30,14 +30,96 @@
             top: 10px;
             right: 20px;
         }
+        .dropDown{
+            position: relative;
+            font-size: 140%;
+            border: 1px solid black;
+            border-radius: 5px;
+            min-width: 400px;
+            max-width: 700px;
+            width: 60%;
+            padding: 10px;
+            overflow: hidden;
+        }
+        .hideButton{
+            position: absolute;
+            right: 10px;
+            top: -3px;
+            font-size: 200%;
+        }
+        .featuredLink{
+            width: 200px;
+            height: 200px;
+            border: solid 1px black;
+            border-radius: 5px;
+            transition: 0.2s;
+        }
+        .featuredLink:hover{
+            box-shadow: 0px 0px 10px #888888;
+        }
+        .dropDown + .dropDown, .featuredLink + .dropDown{
+            margin-top: 5px;
+        }
+        #headerLogo{
+            color: white;
+            text-decoration: none;
+        }
     </style>
+    
+    
     <div class = "header">
-        <h1>Top tier website</h1>
-        <!--<a id = "discordLink" href = "https://discord.gg/7ZCJ9Vz">
+        <a id = "headerLogo" href = "http://itzjacki.com"><h1>Top tier website</h1></a>
+        <a id = "discordLink" href = "https://discord.gg/7ZCJ9Vz">
             <img src = "https://imgur.com/5DjJTcq.png" title = "Join our Discord channel!">
-        </a>-->
+        </a>
         <a id = "paypalLink" href = "https://www.paypal.me/JakobKielland">
             <img src = "https://imgur.com/5zXJhJu.png" title = "Im a poor student with no money, please send help.">
         </a>
     </div>
+    <div style = "height: 70px"></div><!--denne er bare for at ting ikke skal havne bak banneret på toppen av siden-->
+    
+    <a class = "featuredLink" href = "http://www.google.com" style = "background-image: url(http://i.imgur.com/ZQltOxP.png)"></a>
+    
+    
+    <!--Her starter drop-down-listene-->
+    <div class = "dropDown" id = "dropDown1" style = "height: 25px">
+        <div>Prosjekter i HTML5</div>
+        <div class = "hideButton" id = "hideButton1" onclick = "openMenu('dropDown1', 'hideButton1')">+</div>
+        <div>
+            <ul>
+                <li>Prosjekt 1</li>
+                <li>Prosjekt 2</li>
+                <li>Prosjekt 3</li>
+                <li>Prosjekt 4</li>
+                <li>Prosjekt 5</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class = "dropDown" id = "dropDown2" style = "height: 25px">
+        <div>Andre ting</div>
+        <div class = "hideButton" id = "hideButton2" onclick = "openMenu('dropDown2', 'hideButton2')">+</div>
+        <div>
+            <ul>
+                <li>Prosjekt 1</li>
+                <li>Prosjekt 2</li>
+                <li>Prosjekt 3</li>
+                <li>Prosjekt 4</li>
+                <li>Prosjekt 5</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        function openMenu(menuID, buttonID){ //åpner menyen, og gjør at knappen lukker menyen neste gang man trykker på den
+            document.getElementById(menuID).removeAttribute("style");
+            document.getElementById(buttonID).innerHTML = "−";
+            document.getElementById(buttonID).setAttribute("onclick", "closeMenu('"+menuID+"', '"+buttonID+"')");
+        }
+        function closeMenu(menuID, buttonID){ //gjør motsatt av den forrige
+            document.getElementById(menuID).setAttribute("style", "height: 25px");
+            document.getElementById(buttonID).innerHTML = "+";
+            document.getElementById(buttonID).setAttribute("onclick", "openMenu('"+menuID+"', '"+buttonID+"')");
+        }
+    </script>
 </html>
