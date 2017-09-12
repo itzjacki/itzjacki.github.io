@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8">
+    <title>Literally the best page on the internet</title>
+    <style>
+        /*Animations*/
+        @keyframes topDonatorAnimation {
+            0% { color: #000000; }
+            50% { color: #FFD700; }
+            100% { color: #000000; }
+        }
+        @keyframes secondDonatorAnimation {
+            0% { color: #000000; }
+            50% { color: #C0C0C0; }
+            100% { color: #000000; }
+        }
+        @keyframes thirdDonatorAnimation {
+            0% { color: #000000; }
+            50% { color: #CD7F32; }
+            100% { color: #000000; }
+        }
+        @keyframes fadein {
+            0% { opacity: 0; }
+            60% { opacity: 0; }
+            100% { opacity: 1; } 
+        }
+        /*Normal CSS*/
+        body{
+            font-family: "Helvetica", Helvetica, sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+        .header{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background-color: black;
+            color: white;
+            padding-left: 10px;
+            display: flex;
+            flex-direction: row;
+        }
+        #discordLink{
+            position: absolute;
+            top: 10px;
+            right: 90px;
+        }
+        #paypalLink{
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+        #headerLogo{
+            color: white;
+            text-decoration: none;
+        }
+        .highScoreContainer{
+            font-size: 150%;
+            display: flex;
+            flex-direction: column;
+            align-items: center
+        }
+        #topDonator{
+            font-size: 110%;
+            animation-name: topDonatorAnimation;
+            animation-duration: 3s;
+            animation-iteration-count: infinite;
+        }
+        #secondDonator{
+            animation-name: secondDonatorAnimation;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+        }
+        #thirdDonator{
+            animation-name: thirdDonatorAnimation;
+            animation-duration: 5s;
+            animation-iteration-count: infinite;
+        }
+        #donationButton{
+            background-color: dodgerblue;
+            border: 2px solid dodgerblue;
+            color: white;
+            border-radius: 4px;
+            padding: 10px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            transition-duration: 0.4s;
+        }
+        #donationButton:hover{
+            background-color: white;
+            color: black;
+        }
+        #leftFlag{
+            width: 240px;
+            height: 180px;
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            animation: fadein 50s;
+        }
+        #rightFlag{
+            width: 240px;
+            height: 180px;
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            transform: scale(-1, 1);
+            animation: fadein 50s;
+        }
+    </style>
+    
+    <div class = "header">
+        <a id = "headerLogo" href = "http://itzjacki.com"><h1>Itzjacki.com</h1></a>
+        <a id = "discordLink" href = "https://discord.gg/7ZCJ9Vz">
+            <img src = "https://imgur.com/5DjJTcq.png" title = "Join our Discord channel!">
+        </a>
+        <a id = "paypalLink" href = "https://www.paypal.me/JakobKielland">
+            <img src = "https://imgur.com/5zXJhJu.png" title = "Im a poor student with no money, please send help.">
+        </a>
+    </div>
+    <div style = "height: 70px"></div><!--denne er bare for at ting ikke skal havne bak banneret på toppen av siden-->
+    <div class = "highScoreContainer">
+        <h2>Hall of Fame</h2>
+        <ol>
+            <li><div id = "topDonator">Jørgen EK - 4,20 kr</div></li>
+            <li><div id = "secondDonator">Anders A - 0,05 kr</div></li>
+        </ol>
+        <br>
+        <a id = "donationButton" href = "https://www.paypal.me/JakobKielland">Donate</a>
+    </div>
+    <audio src = "http://k003.kiwi6.com/hotlink/6aisg223oh/Soviet_anthem.mp3" autoplay loop ></audio>
+    <img src = "https://i.imgur.com/oYlnas9.gif" id = "leftFlag">
+    <img src = "https://i.imgur.com/oYlnas9.gif" id = "rightFlag">
+</html>
