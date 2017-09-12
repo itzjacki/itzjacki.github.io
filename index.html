@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
     <meta charset="utf-8">
@@ -48,14 +49,16 @@
             font-size: 200%;
         }
         .featuredLink{
+            display: block;
             width: 200px;
             height: 200px;
             border: solid 1px black;
             border-radius: 5px;
             transition: 0.2s;
+            margin-right: 5px;
         }
         .featuredLink:hover{
-            box-shadow: 0px 0px 10px #888888;
+            box-shadow: 0px 0px 15px #000000;
         }
         .dropDown + .dropDown, .featuredLink + .dropDown{
             margin-top: 5px;
@@ -63,6 +66,14 @@
         #headerLogo{
             color: white;
             text-decoration: none;
+        }
+        .featuredContainer{
+            width: 100%;
+            height: 202px;  /*200px + 2 * 1px per border*/
+            display: flex;
+        }
+        .listLink{
+            color: black;
         }
     </style>
     
@@ -79,10 +90,19 @@
     <div style = "height: 70px"></div><!--denne er bare for at ting ikke skal havne bak banneret på toppen av siden-->
     <br><br><br><br>
     
-    <a class = "featuredLink" href = "http://itzjacki.com/top_donators" style = "background-image: url(https://i.imgur.com/QkWPSdb.jpg)"></a>
+    <!--Featured Links-->
     
+    <div class = "featuredContainer">
+        <!--Pablo Adventures-->
+        <a class = "featuredLink" href = "http://itzjacki.com/pablo_adventures" style = "background-image: url(https://i.imgur.com/70gnYBH.jpg)"></a>
+        <!--Hall of Fame-->
+        <a class = "featuredLink" href = "http://itzjacki.com/top_donators" style = "background-image: url(https://i.imgur.com/QkWPSdb.jpg)"></a>
+    </div>
     <br><br>
-    <!--Her starter drop-down-listene-->
+    
+    <!--Drop-Down Lists-->
+    
+    <!--HTML5 Projects-->
     <div class = "dropDown" id = "dropDown1" style = "height: 25px">
         <div>Prosjekter i HTML5</div>
         <div class = "hideButton" id = "hideButton1" onclick = "openMenu('dropDown1', 'hideButton1')">+</div>
@@ -97,19 +117,25 @@
         </div>
     </div>
     
+    <!--Other things-->
     <div class = "dropDown" id = "dropDown2" style = "height: 25px">
         <div>Andre ting</div>
         <div class = "hideButton" id = "hideButton2" onclick = "openMenu('dropDown2', 'hideButton2')">+</div>
         <div>
             <ul>
-                <li>Prosjekt 1</li>
-                <li>Prosjekt 2</li>
+                <li>
+                    <a class = "listLink" href = "http://itzjacki.com/top_donators">Donators Hall of Fame</a>
+                </li>
+                <li>
+                    <a class = "listLink" href = "http://itzjacki.com/pablo_adventures">The Adventures of Pablo Botón</a>
+                </li>
                 <li>Prosjekt 3</li>
                 <li>Prosjekt 4</li>
                 <li>Prosjekt 5</li>
             </ul>
         </div>
     </div>
+    
     
     <script>
         function openMenu(menuID, buttonID){ //åpner menyen, og gjør at knappen lukker menyen neste gang man trykker på den
