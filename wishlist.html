@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8">
+    <title>Literally the best page on the internet</title>
+    <style>
+        /*Normal CSS*/
+        body{
+            font-family: "Helvetica", Helvetica, sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+        .header{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background-color: black;
+            color: white;
+            padding-left: 10px;
+            display: flex;
+            flex-direction: row;
+        }
+        #discordLink{
+            position: absolute;
+            top: 10px;
+            right: 90px;
+        }
+        #paypalLink{
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+        #headerLogo{
+            color: white;
+            text-decoration: none;
+        }
+        .description{
+            border: solid darkgray 1px;
+            max-width: 90%;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 95%;
+        }
+        .descBut{
+            border: solid 1px black;
+            border-radius: 2px;
+            background: linear-gradient(white, #c8c8c8);
+        }
+    </style>
+    <!--Header-->
+    <div class = "header">
+        <a id = "headerLogo" href = "http://itzjacki.com"><h1>Itzjacki.com</h1></a>
+        <a id = "discordLink" href = "https://discord.gg/7ZCJ9Vz">
+            <img src = "https://imgur.com/5DjJTcq.png" title = "Join our Discord channel!">
+        </a>
+        <a id = "paypalLink" href = "https://www.paypal.me/JakobKielland">
+            <img src = "https://imgur.com/5zXJhJu.png" title = "Im a poor student with no money, please send help.">
+        </a>
+    </div>
+    <div style = "height: 70px"></div><!--denne er bare for at ting ikke skal havne bak banneret på toppen av siden-->
+    <!--Header end-->
+    <div id = "listContainer">
+        <h2>Ønskelister:</h2>
+        <h3>Amanda:</h3>
+            <ul>
+                <!--Template for hvordan hver ting skal føres inn
+                <li>
+                    <b>Navn</b>, X kr (+ frakt)
+                    <button class = "descBut" onclick = "toggleInfo('descX')">Se mer/mindre</button>
+                    <div class = "description" id = "descX" hidden = "">
+                        <i>Beskrivelse kommer her</i>
+                        <br>
+                        <br>
+                        Lenker:
+                        <ul>
+                            <li><a href = "http://www.shop.com/item/42069">Selger 1</a></li>
+                        </ul>
+                    </div>
+                </li>
+                -->
+                <li>
+                    <b>Trådløst tegnebrett (Huion WH1409)</b>, 1185 kr + toll
+                    <button class = "descBut" onclick = "toggleInfo('descA1')">Se mer/mindre</button>
+                    <div class = "description" id = "descA1" hidden = "">
+                        <i>Amandas tegnebrett er ganske slitt, og dette tegnebrettet vil være en oppgradering, uten at det har det prisnivået som såpass gode tegnebrett ofte har. Takk gud for kinesisk barnearbeid!</i>
+                        <br>
+                        <br>
+                        Lenker:
+                        <ul>
+                            <li><a href = "http://www.ebay.com/itm/222098622377">Ebayselger 1</a></li>
+                            <li><a href = "http://www.ebay.com/itm/222171118556">Ebayselger 2</a></li>
+                            <li><a href = "http://www.ebay.com/itm/302295821872">Ebayselger 3</a></li>
+                        </ul>
+                    </div>
+                </li> 
+            </ul>
+        <h3>Jakob:</h3>
+        <ul>
+            <li>
+                <b>Webkamera</b>, 900 kr
+                <button class = "descBut" onclick = "toggleInfo('descJ1')">Se mer/mindre</button>
+                <div class = "description" id = "descJ1" hidden = "">
+                    <i>Webkamera slik at dere kan se meg bedre når vi snakker sammen! Det jeg bruker nå er egentlig ganske elendig...</i>
+                    <br>
+                    <br>
+                    Lenker:
+                    <ul>
+                        <li><a href = "https://goo.gl/tu7mst">CDON</a></li>
+                        <li><a href = "https://goo.gl/4Tjpdx">NetOnNet</a></li>
+                        <li><a href = "https://goo.gl/yj5FeR">Elkjøp</a></li>
+                        <li><a href = "https://www.prisjakt.no/product.php?p=3935421">Prisjakt</a> her går det an å se hvor det er billigst for øyeblikket.</li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <b>Mikrofonstativ</b>, 175 kr + frakt
+                <button class = "descBut" onclick = "toggleInfo('descJ2')">Se mer/mindre</button>
+                <div class = "description" id = "descJ2" hidden = "">
+                    <i>Stativ til å holde mikrofon, veldig kjekt å ha dersom man bruker en mikrofon som ikke sitter fast på headsettet (som jeg gjør).</i>
+                    <br>
+                    <br>
+                    Lenker:
+                    <ul>
+                        <li><a href = "http://amzn.eu/agr8U4q">Amazon UK</a></li>
+                        <li><a href = "http://www.ebay.com/itm/361621098896">Ebay</a> (en del billigere, men ikke like bra som den andre)</li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <b>Dual band-ruter (F. eks. Asus RT-AC750)</b>, 500 kr
+                <button class = "descBut" onclick = "toggleInfo('descJ3')">Se mer/mindre</button>
+                <div class = "description" id = "descJ3" hidden = "">
+                    <i>Jeg ønsker meg en litt bedre ruter enn det jeg har nå, og en dual band-ruter (som kan ta i bruk 5.0 GHz signaler) er veldig kjekt å ha når man bor i et område med mange andre nettverk.</i>
+                    <br>
+                    <br>
+                    Lenker:
+                    <ul>
+                        <li><a href = "https://goo.gl/83mCWK">Elkjøp</a></li>
+                        <li><a href = "https://goo.gl/Ge8Rzb">Prisjakt</a>. Prisjaktside med rutere som støtter dual band, fint sted å se etter andre muligheter</li>
+                    </ul>
+                </div>
+            </li> 
+        </ul>
+    </div>
+    <script>
+        
+        function isHidden(elId) {
+            return (document.getElementById(elId).offsetParent === null)
+        }
+        
+        
+        function toggleInfo(descId){
+            if (isHidden(descId)) {
+                document.getElementById(descId).removeAttribute("hidden", "")
+            }
+            else{
+                document.getElementById(descId).setAttribute("hidden", "")
+            }
+        }
+    </script>
+</html>
