@@ -31,7 +31,6 @@
 
             .helpText{
                 text-align: center;
-                font-size: 14px;
             }
 
             .singleImageContainer{
@@ -53,7 +52,7 @@
             }
 
             #optionContainer{
-                width: 515px;
+                width: 451px;
                 border-radius: 10px;
                 background-color: #282828;
                 color: #888;
@@ -83,22 +82,22 @@
             <div id="rotationImageContainer">
                 <div class="singleImageContainer" onclick="hideImages(0)">
                     <span class="titleText">Pattern 1</span>
-                    <img src="https://i.imgur.com/vPXksSU.png" alt="Browser failed to load pattern1" class="rotationImage">
+                    <img src="https://i.imgur.com/fCfDK19.png" alt="Browser failed to load pattern1" class="rotationImage">
                 </div>
 
                 <div class="singleImageContainer" onclick="hideImages(1)">
                     <span class="titleText">Pattern 2</span>
-                    <img src="https://i.imgur.com/sPXzKKz.png" alt="Browser failed to load pattern2" class="rotationImage">
+                    <img src="https://i.imgur.com/k72RMXA.png" alt="Browser failed to load pattern2" class="rotationImage">
                 </div>
 
                 <div class="singleImageContainer" onclick="hideImages(2)">
                     <span class="titleText">Pattern 3</span>
-                    <img src="https://i.imgur.com/nhd3yTr.png" alt="Browser failed to load pattern3" class="rotationImage">
+                    <img src="https://i.imgur.com/gI4T36s.png" alt="Browser failed to load pattern3" class="rotationImage">
                 </div>
 
                 <div class="singleImageContainer" onclick="hideImages(3)">
                     <span class="titleText">Pattern 4</span>
-                    <img src="https://i.imgur.com/2qfqwq9.png" alt="Browser failed to load pattern4" class="rotationImage">
+                    <img src="https://i.imgur.com/gNo0OpX.png" alt="Browser failed to load pattern4" class="rotationImage">
                 </div>
             </div>
 
@@ -123,6 +122,10 @@
                     <label for="imageDimCheckbox">Hide images completely</label>
                     <input type="checkbox" id="imageDimCheckbox" onclick="changeSettings()">
                 </div>
+                <div>
+                    <label for="prayerCheckbox">Show overhead prayers</label>
+                    <input type="checkbox" id="prayerCheckbox" onclick="changeSettings()">
+                </div>
                 <br>
                 <p class="helpText">Made by<i>Jakob btw,</i>(ironman btw).</p>
             </div>
@@ -131,17 +134,22 @@
         <script>
             let nameCheckbox = document.getElementById("patternNameCheckbox");
             let dimCheckbox = document.getElementById("imageDimCheckbox");
+            let prayerCheckbox = document.getElementById("prayerCheckbox");
             let options = document.getElementById("optionContainer");
             let optionHider = document.getElementById("optionHider");
 
-            let imageArray = document.getElementsByClassName("singleImageContainer");
+            let imageContainerArray = document.getElementsByClassName("singleImageContainer");
             let nameArray = document.getElementsByClassName("titleText");
+            let imageArray = document.getElementsByClassName("rotationImage");
 
             let numericalNames = ["Pattern 1", "Pattern 2", "Pattern 3", "Pattern 4"];
             let phoneticNames = ["Alpha", "Bravo", "Charlie", "Delta"];
+            let normalLinks = ["https://i.imgur.com/fCfDK19.png", "https://i.imgur.com/k72RMXA.png", "https://i.imgur.com/gI4T36s.png", "https://i.imgur.com/gNo0OpX.png"];
+            let prayerLinks = ["https://i.imgur.com/RTIeoQS.png", "https://i.imgur.com/tcV9TOf.png", "https://i.imgur.com/3us7BzW.png", "https://i.imgur.com/1gJAJfs.png"];
             let phoneticPatterns = false;
             let hideCompletely = false;
             let optionsHidden = false;
+            let prayerImages = false;
 
             function setCookie(cname, cvalue, exdays) {
                 let d = new Date();
@@ -167,12 +175,16 @@
             }
 
             (function() {
+                // Runs on page load, loads options from cookies
                 phoneticPatterns = (getCookie("phoneticPatterns") === "true");
                 hideCompletely = (getCookie("hideCompletely") === "true");
                 optionsHidden = (getCookie("optionsHidden") === "true");
+                prayerImages = (getCookie("prayerImages") === "true");
 
                 nameCheckbox.checked = phoneticPatterns;
                 dimCheckbox.checked = hideCompletely;
+                prayerCheckbox.checked = prayerImages;
+                updateImages();
                 updateNames();
                 updateOptionShow();
             })();
@@ -181,6 +193,7 @@
                 setCookie("phoneticPatterns", phoneticPatterns, 365);
                 setCookie("hideCompletely", hideCompletely, 365);
                 setCookie("optionsHidden", optionsHidden, 365);
+                setCookie("prayerImages", prayerImages, 365);
             }
 
             function updateNames() {
@@ -194,19 +207,6 @@
                 }
             }
 
-            function changeSettings() {
-                phoneticPatterns = nameCheckbox.checked;
-                hideCompletely = dimCheckbox.checked;
-                updateNames();
-                setAllCookies();
-            }
-
-            function toggleOptions() {
-                optionsHidden = !optionsHidden;
-                setAllCookies();
-                updateOptionShow()
-            }
-
             function updateOptionShow() {
                 options.hidden = optionsHidden;
                 if(optionsHidden){
@@ -217,25 +217,54 @@
                 }
             }
 
-            function hideImages(imageId) {
+            function updateImages() {
+                let images;
+                if(prayerImages) {
+                    images = prayerLinks;
+                }
+                else{
+                    images = normalLinks;
+                }
+
                 for(let i = 0; i < imageArray.length; i++){
+                    imageArray[i].setAttribute("src", images[i])
+                }
+            }
+
+            function changeSettings() {
+                phoneticPatterns = nameCheckbox.checked;
+                hideCompletely = dimCheckbox.checked;
+                prayerImages = prayerCheckbox.checked;
+                updateImages();
+                updateNames();
+                setAllCookies();
+            }
+
+            function toggleOptions() {
+                optionsHidden = !optionsHidden;
+                setAllCookies();
+                updateOptionShow()
+            }
+
+            function hideImages(imageId) {
+                for(let i = 0; i < imageContainerArray.length; i++){
                     if(i !== imageId){
                         if(hideCompletely){
-                            imageArray[i].setAttribute("style", "filter: blur(5px); opacity: 0%;");
+                            imageContainerArray[i].setAttribute("style", "filter: blur(5px); opacity: 0%;");
                         }
                         else{
-                            imageArray[i].setAttribute("style", "filter: blur(5px); opacity: 25%;");
+                            imageContainerArray[i].setAttribute("style", "filter: blur(5px); opacity: 25%;");
                         }
                     }
-                    imageArray[i].removeAttribute("onclick");
-                    imageArray[i].setAttribute("onclick", "showImages()");
+                    imageContainerArray[i].removeAttribute("onclick");
+                    imageContainerArray[i].setAttribute("onclick", "showImages()");
                 }
             }
 
             function showImages() {
-                for(let i = 0; i < imageArray.length; i++){
-                    imageArray[i].removeAttribute("style");
-                    imageArray[i].setAttribute("onclick", "hideImages(" + i + ")");
+                for(let i = 0; i < imageContainerArray.length; i++){
+                    imageContainerArray[i].removeAttribute("style");
+                    imageContainerArray[i].setAttribute("onclick", "hideImages(" + i + ")");
                 }
             }
 
