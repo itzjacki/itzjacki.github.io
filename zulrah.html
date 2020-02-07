@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>The best Zulrah guide</title>
+        <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
+        <style>
+            body{
+                background-color: #1E1E1E;
+                font-family: 'Nanum Gothic', sans-serif;
+            }
+
+            #mainContainer{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            #rotationImageContainer{
+                display: flex;
+                flex-direction: row;
+                background-color: #282828;
+                width: fit-content;
+                border-radius: 10px;
+                padding: 10px 5px 10px 10px;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+
+            .helpText{
+                text-align: center;
+                font-size: 14px;
+            }
+
+            .singleImageContainer{
+                display: flex;
+                flex-direction: column;
+                margin-right: 5px;
+            }
+
+            .singleImageContainer * {
+                width: 100%;
+            }
+
+            .titleText{
+                background-color: #3d3d3d;
+                text-align: center;
+                color: white;
+                padding: 5px 0 5px 0;
+                border-radius: 15px 15px 0 0;
+            }
+
+            #optionContainer{
+                width: 515px;
+                border-radius: 10px;
+                background-color: #282828;
+                color: #888;
+            }
+
+            #optionContainer *{
+                margin: 10px;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+
+            #optionHider{
+                color: #444;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                cursor: pointer;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="mainContainer">
+            <div id="rotationImageContainer">
+                <div class="singleImageContainer" onclick="hideImages(0)">
+                    <span class="titleText">Pattern 1</span>
+                    <img src="https://i.imgur.com/vPXksSU.png" alt="Browser failed to load pattern1" class="rotationImage">
+                </div>
+
+                <div class="singleImageContainer" onclick="hideImages(1)">
+                    <span class="titleText">Pattern 2</span>
+                    <img src="https://i.imgur.com/sPXzKKz.png" alt="Browser failed to load pattern2" class="rotationImage">
+                </div>
+
+                <div class="singleImageContainer" onclick="hideImages(2)">
+                    <span class="titleText">Pattern 3</span>
+                    <img src="https://i.imgur.com/nhd3yTr.png" alt="Browser failed to load pattern3" class="rotationImage">
+                </div>
+
+                <div class="singleImageContainer" onclick="hideImages(3)">
+                    <span class="titleText">Pattern 4</span>
+                    <img src="https://i.imgur.com/2qfqwq9.png" alt="Browser failed to load pattern4" class="rotationImage">
+                </div>
+            </div>
+
+            <br>
+
+            <div id="optionHider" onclick="toggleOptions()">
+                Hide options
+            </div>
+
+            <br>
+
+            <div id="optionContainer">
+                <p class="helpText">
+                    Click a pattern to focus on that pattern, click on any pattern to reset.
+                </p>
+                <br>
+                <div>
+                    <label for="patternNameCheckbox">Phonetic pattern names</label>
+                    <input type="checkbox" id="patternNameCheckbox" onclick="changeSettings()">
+                </div>
+                <div>
+                    <label for="imageDimCheckbox">Hide images completely</label>
+                    <input type="checkbox" id="imageDimCheckbox" onclick="changeSettings()">
+                </div>
+                <br>
+                <p class="helpText">Made by<i>Jakob btw,</i>(ironman btw).</p>
+            </div>
+        </div>
+
+        <script>
+            let nameCheckbox = document.getElementById("patternNameCheckbox");
+            let dimCheckbox = document.getElementById("imageDimCheckbox");
+            let options = document.getElementById("optionContainer");
+            let optionHider = document.getElementById("optionHider");
+
+            let imageArray = document.getElementsByClassName("singleImageContainer");
+            let nameArray = document.getElementsByClassName("titleText");
+
+            let numericalNames = ["Pattern 1", "Pattern 2", "Pattern 3", "Pattern 4"];
+            let phoneticNames = ["Alpha", "Bravo", "Charlie", "Delta"];
+            let phoneticPatterns = false;
+            let hideCompletely = false;
+            let optionsHidden = false;
+
+            function setCookie(cname, cvalue, exdays) {
+                let d = new Date();
+                d.setTime(d.getTime() + (exdays*24*60*60*1000));
+                let expires = "expires="+ d.toUTCString();
+                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            }
+
+            function getCookie(cname) {
+                let name = cname + "=";
+                let decodedCookie = decodeURIComponent(document.cookie);
+                let ca = decodedCookie.split(';');
+                for(let i = 0; i <ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) === ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) === 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+
+            (function() {
+                phoneticPatterns = (getCookie("phoneticPatterns") === "true");
+                hideCompletely = (getCookie("hideCompletely") === "true");
+                optionsHidden = (getCookie("optionsHidden") === "true");
+
+                nameCheckbox.checked = phoneticPatterns;
+                dimCheckbox.checked = hideCompletely;
+                updateNames();
+                updateOptionShow();
+            })();
+
+            function setAllCookies() {
+                setCookie("phoneticPatterns", phoneticPatterns, 365);
+                setCookie("hideCompletely", hideCompletely, 365);
+                setCookie("optionsHidden", optionsHidden, 365);
+            }
+
+            function updateNames() {
+                for(let i = 0; i < nameArray.length; i++){
+                    if(phoneticPatterns){
+                        nameArray[i].innerHTML = phoneticNames[i];
+                    }
+                    else{
+                        nameArray[i].innerHTML = numericalNames[i];
+                    }
+                }
+            }
+
+            function changeSettings() {
+                phoneticPatterns = nameCheckbox.checked;
+                hideCompletely = dimCheckbox.checked;
+                updateNames();
+                setAllCookies();
+            }
+
+            function toggleOptions() {
+                optionsHidden = !optionsHidden;
+                setAllCookies();
+                updateOptionShow()
+            }
+
+            function updateOptionShow() {
+                options.hidden = optionsHidden;
+                if(optionsHidden){
+                    optionHider.innerHTML = "Show options";
+                }
+                else{
+                    optionHider.innerHTML = "Hide options";
+                }
+            }
+
+            function hideImages(imageId) {
+                for(let i = 0; i < imageArray.length; i++){
+                    if(i !== imageId){
+                        if(hideCompletely){
+                            imageArray[i].setAttribute("style", "filter: blur(5px); opacity: 0%;");
+                        }
+                        else{
+                            imageArray[i].setAttribute("style", "filter: blur(5px); opacity: 25%;");
+                        }
+                    }
+                    imageArray[i].removeAttribute("onclick");
+                    imageArray[i].setAttribute("onclick", "showImages()");
+                }
+            }
+
+            function showImages() {
+                for(let i = 0; i < imageArray.length; i++){
+                    imageArray[i].removeAttribute("style");
+                    imageArray[i].setAttribute("onclick", "hideImages(" + i + ")");
+                }
+            }
+
+
+        </script>
+    </body>
+</html>
