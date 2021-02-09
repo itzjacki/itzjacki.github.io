@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!-- Disclaimer: This code was never supposed to leave my hard drive and was created in a rush, so I definitely used some "less than optimal" solutions. -->
+<!-- Author: Jakob Endrestad Kielland -->
+<html>
+    <head>
+        <title>2x2 Hill helper</title>
+        <meta charset="utf-8">
+        <style>
+            body {
+                font-family: sans-serif;
+            }
+            .inpField {
+                width: 50px;
+            }
+            .matrixTable {
+                display: inline-table;
+                margin: 5px 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <h3>Hill cipher cracking helper</h3>
+        <p style="max-width: 50vmax">
+            This tool lets you enter two pairs of digrams and automatically outputs the relevant 
+            equation that needs to be solved to find a potential key with the provided digrams.
+            The tool also checks whether the first inversion is doable. If planning to solve for
+            the encryption key, you'd still need to do a second inversion to turn the encryption 
+            key into a decryption key. This tool only checks the feasibility of the first inversion, 
+            which happens before the matrix multiplication, not the second one.
+        </p>
+        <table>
+            <tr>
+                <td>
+                    <span>Ciphertext</span>
+                </td>
+                <td></td>
+                <td>
+                    <span>Plaintext</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" class="inpField" id="c1" maxlength="2" onkeyup="updateMatrices()" value="ba">
+                </td>
+                <td>
+                    <span>=</span>
+                </td>
+                <td>
+                    <input type="text" class="inpField" id="p1" maxlength="2" onkeyup="updateMatrices()" value="th">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" class="inpField" id="c2" maxlength="2" onkeyup="updateMatrices()" value="ae">
+                </td>
+                <td>
+                    <span>=</span>
+                </td>
+                <td>
+                    <input type="text" class="inpField" id="p2" maxlength="2" onkeyup="updateMatrices()" value="he">
+                </td>
+            </tr>
+        </table>
+        <br>
+        <span id="modeField">Solving for encryption key</span> <button onclick="switchMode()">Switch mode</button>
+        <br>
+        <br>
+        <table class="matrixTable">
+            <tr>
+                <td>a</td>
+                <td>b</td>
+            </tr>
+            <tr>
+                <td>c</td>
+                <td>d</td>
+            </tr>
+        </table>
+        <span>*</span>
+        <table class="matrixTable">
+            <tr>
+                <td id="m1_1">-</td>
+                <td id="m1_2">-</td>
+            </tr>
+            <tr>
+                <td id="m1_3">-</td>
+                <td id="m1_4">-</td>
+            </tr>
+        </table>
+        <span>=</span>
+        <table class="matrixTable">
+            <tr>
+                <td id="m2_1">-</td>
+                <td id="m2_2">-</td>
+            </tr>
+            <tr>
+                <td id="m2_3">-</td>
+                <td id="m2_4">-</td>
+            </tr>
+        </table>
+
+        <div id="outputField"></div>
+
+        <script>
+            findDecryptionKey = false;
+            const p1 = document.getElementById("p1");
+            const p2 = document.getElementById("p2");
+            const c1 = document.getElementById("c1");
+            const c2 = document.getElementById("c2");
+
+            const m1_1 = document.getElementById("m1_1");
+            const m1_2 = document.getElementById("m1_2");
+            const m1_3 = document.getElementById("m1_3");
+            const m1_4 = document.getElementById("m1_4");
+
+            const m2_1 = document.getElementById("m2_1");
+            const m2_2 = document.getElementById("m2_2");
+            const m2_3 = document.getElementById("m2_3");
+            const m2_4 = document.getElementById("m2_4");
+
+            const outputField = document.getElementById("outputField");
+
+            function switchMode(){
+                findDecryptionKey = !findDecryptionKey;
+                document.getElementById("modeField").innerHTML = (findDecryptionKey ? "I plan to solve for the decryption key" : "I plan to solve for the encryption key")
+                updateMatrices();
+            }
+
+            function updateMatrices(){
+                if(p1.value.length !== 2 || p2.value.length !== 2 || c1.value.length !== 2 || c2.value.length !== 2){
+                    return;
+                }
+                else{
+                    if(findDecryptionKey){
+                    m1_1.innerHTML = c1.value.charCodeAt(0)-97;
+                    m1_2.innerHTML = c2.value.charCodeAt(0)-97;
+                    m1_3.innerHTML = c1.value.charCodeAt(1)-97;
+                    m1_4.innerHTML = c2.value.charCodeAt(1)-97;
+
+                    m2_1.innerHTML = p1.value.charCodeAt(0)-97;
+                    m2_2.innerHTML = p2.value.charCodeAt(0)-97;
+                    m2_3.innerHTML = p1.value.charCodeAt(1)-97;
+                    m2_4.innerHTML = p2.value.charCodeAt(1)-97;
+                    checkInvertible(c1.value.charCodeAt(0)-97, c2.value.charCodeAt(0)-97, c1.value.charCodeAt(1)-97, c2.value.charCodeAt(1)-97);
+                    
+                    }
+                    else{
+                        m1_1.innerHTML = p1.value.charCodeAt(0)-97;
+                        m1_2.innerHTML = p2.value.charCodeAt(0)-97;
+                        m1_3.innerHTML = p1.value.charCodeAt(1)-97;
+                        m1_4.innerHTML = p2.value.charCodeAt(1)-97;
+
+                        m2_1.innerHTML = c1.value.charCodeAt(0)-97;
+                        m2_2.innerHTML = c2.value.charCodeAt(0)-97;
+                        m2_3.innerHTML = c1.value.charCodeAt(1)-97;
+                        m2_4.innerHTML = c2.value.charCodeAt(1)-97;
+                        checkInvertible(p1.value.charCodeAt(0)-97, p2.value.charCodeAt(0)-97, p1.value.charCodeAt(1)-97, p2.value.charCodeAt(1)-97);
+                    }
+                }
+            }
+
+            function checkInvertible(i1, i2, i3, i4){
+                let det = (i1*i4)-(i2*i3);
+                let isInertible = !((det % 2 === 0) || (det === 0) || (det % 13 === 0));
+                outputField.innerHTML = (isInertible ? "Solvable" : "Not solvable")
+            }
+        </script>
+    </body>
+</html>
